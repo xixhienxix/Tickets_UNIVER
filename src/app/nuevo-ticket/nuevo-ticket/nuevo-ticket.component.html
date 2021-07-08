@@ -1,0 +1,33 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-success">
+                        <h4 class="card-title">Nuevo Ticket</h4>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            
+                            <h4>Selecciona El Area</h4>
+                            <mat-form-field appearance="fill">
+                            <mat-label>Choose an option</mat-label>
+                            <mat-select>
+                                <mat-option value="option1">Control Academico</mat-option>
+                                <mat-option value="option2">Servicios Escolares</mat-option>
+                                <mat-option value="option3">Dudas Generales</mat-option>
+                                <mat-option value="option3">Welcome Call</mat-option>
+                            </mat-select>
+                            </mat-form-field>
+
+                            <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)=close()>Guardar Ticket</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+  </div>
+  
