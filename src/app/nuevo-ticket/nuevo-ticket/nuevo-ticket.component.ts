@@ -37,7 +37,8 @@ export class NuevoTicketComponent implements OnInit {
 
   getCampanas()
   {
-    this.campanaService.getCampanas().subscribe((response)=>{
+    this.campanaService.getCampanas()
+    .subscribe((response)=>{
       this.listaCampanas=response
     })
 

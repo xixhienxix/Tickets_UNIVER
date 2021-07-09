@@ -5,6 +5,6 @@ export const environment = {
   USERDATA_KEY: 'authf649fc9a5f55',
   isMockEnabled: false,
   //apiUrl:'https://movnext-api.eu-4.evennode.com/api'
-  apiUrl:'http://localhost:8080/api'
+  apiUrl:'http://localhost:8081/api'
 
 };
