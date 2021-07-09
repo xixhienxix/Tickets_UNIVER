@@ -5,14 +5,16 @@ const mysql = require('mysql');
 const events = require('./events');
 
 const connection = mysql.createConnection({
-  host     : 'localhost',
+  host     : 'UNVRECWSTDESA01',
   user     : 'root',
-  password : '',
-  port: '3306',
+  password : '34nj6efH',
+  port: '8081',
   database : 'tickets_univer'
 });
 
-connection.connect();
+ connection.connect();
+
+
 
 const port = process.env.PORT || 8080;
 

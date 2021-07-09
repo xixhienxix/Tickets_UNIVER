@@ -9,18 +9,30 @@
                     <div class="card-body">
                         <form>
                             
-                            <h4>Selecciona El Area</h4>
+                            <h4>Selecciona Campaña</h4>
                             <mat-form-field appearance="fill">
-                            <mat-label>Choose an option</mat-label>
-                            <mat-select>
-                                <mat-option value="option1">Control Academico</mat-option>
-                                <mat-option value="option2">Servicios Escolares</mat-option>
-                                <mat-option value="option3">Dudas Generales</mat-option>
-                                <mat-option value="option3">Welcome Call</mat-option>
+                            <mat-label>Selecciona Campaña</mat-label>
+                            <mat-select #selected>
+                                <ng-container *ngFor="let campanas of listaCampanas">
+                                    <mat-option value="{{campanas.id}}">{{campanas.descripcion}}</mat-option>
+                                </ng-container>
                             </mat-select>
                             </mat-form-field>
 
-                            <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)=close()>Guardar Ticket</button>
+                            <h4>Responsable</h4>
+                            <mat-form-field appearance="fill">
+                            <mat-label>Selecciona Responsable</mat-label>
+                            <mat-select #responsable>
+                                <mat-option value="1">Responsable #1</mat-option>
+                                <mat-option value="2">Responsable #1</mat-option>
+                                <mat-option value="3">Responsable #1</mat-option>
+                                <mat-option value="4">Responsable #1</mat-option>
+                            </mat-select>
+                            </mat-form-field>
+
+                 
+                
+                            <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="guardaTicket(selected.value,responsable.value);close()">Guardar Ticket</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>

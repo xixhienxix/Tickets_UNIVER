@@ -4,9 +4,9 @@ function createRouter(db) {
   const router = express.Router();
   const owner = '';
 
-  router.post('/event', (req, res, next) => {
+  router.post('/api/tickets', (req, res, next) => {
     db.query(
-      'INSERT INTO events (owner, name, description, date) VALUES (?,?,?,?)',
+      'INSERT INTO tickets (campana, responsable, supervisor, estatus,fecha_inicio_fecha_fin) VALUES (?,?,?,?,?,?)',
       [owner, req.body.name, req.body.description, new Date(req.body.date)],
       (error) => {
         if (error) {
@@ -19,10 +19,23 @@ function createRouter(db) {
     );
   });
 
-  router.get('/event', function (req, res, next) {
+  router.get('/api/tickets', function (req, res, next) {
     db.query(
       'SELECT 1+1 FROM Tickets',
       [owner, 10*(req.params.page || 0)],
+      (error, results) => {
+        if (error) {
+          console.log(error);
+          res.status(500).json({status: 'error'});
+        } else {
+          res.status(200).json(results);
+        }
+      }
+    );
+  });
+  router.get('/api/get/campanas', function (req, res, next) {
+    db.query(
+      'SELECT * FROM sys_config',
       (error, results) => {
         if (error) {
           console.log(error);

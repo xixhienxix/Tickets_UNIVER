@@ -25,8 +25,8 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { NuevoTicketComponent } from './nuevo-ticket/nuevo-ticket/nuevo-ticket.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
-import { WizardComponent } from './wizard/wizard/wizard.component';
 import {MatStepperModule} from '@angular/material/stepper/'
+import {TextFieldModule} from '@angular/cdk/text-field';
 
 @NgModule({
   imports: [
@@ -40,6 +40,7 @@ import {MatStepperModule} from '@angular/material/stepper/'
     MatFormFieldModule,
     MatSelectModule,
     MatStepperModule,
+    TextFieldModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     })
@@ -48,7 +49,6 @@ import {MatStepperModule} from '@angular/material/stepper/'
     AppComponent,
     AdminLayoutComponent,
     NuevoTicketComponent,
-    WizardComponent,
 
   ],
   providers: [],
