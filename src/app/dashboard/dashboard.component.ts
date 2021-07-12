@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NuevoTicketComponent } from 'app/nuevo-ticket/nuevo-ticket/nuevo-ticket.component';
 import { HttpClient } from "@angular/common/http";
 import {environment} from "../../environments/environment"
-
+import { Tickets } from 'app/models/tickets';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +12,7 @@ import {environment} from "../../environments/environment"
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  public listaTickets:[]=[];
+  public listaTickets:Tickets[]=[];
   constructor(
     private modalService: NgbModal,
     private http: HttpClient
@@ -20,12 +20,12 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-      
+      this.getTickets()
   }
 
   getTickets()
   {
-    this.http.get<any>(environment.apiUrl+"/api/tickets")
+    this.http.get<any>(environment.apiUrl+"/tickets")
     .subscribe((response)=>{
     this.listaTickets=response
     })

@@ -1,44 +1,93 @@
-const express = require('express')
-const bodyParser = require('body-Parser')
-const mysql = require('mysql')
-var cors = require('cors')
+// Require packages and set the port
+const express = require('express');
+const port = 8081;
+const bodyParser = require('body-parser');
+const routes = require('./routes/routes')
 const app = express();
-const port = process.env.PORT || 8081
+const cors = require('cors');
 
-app.use(bodyParser.urlencoded({extended:false}))
+// Use Node.js body parsing middleware
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true,
+}));
 
-app.use(bodyParser.json())
+routes(app);
 
-app.use(cors())
-//MYSQL
+// Start the server
+const server = app.listen(port, (error) => {
+    if (error) return console.log(`Error: ${error}`);
 
-const pool = mysql.createPool({
-    connectionLimit:10,
-    host:'localhost',
-    user:'root',
-    password:'',
-    database:'tickets_univer',
+    console.log(`Server listening on port ${server.address().port}`);
+});
+// const port = process.env.PORT || 8081
 
-})
+// const mysql = require('mysql')
 
-app.get('/api/get/campanas',(req,res)=>{
+// //MYSQL
 
-    pool.getConnection((err,connection)=>{
-        if(err) throw err
-        console.log('connectec as id: ', connection.threadId)
+// const pool = mysql.createPool({
+//     connectionLimit:10,
+//     host:'localhost',
+//     user:'root',
+//     password:'',
+//     database:'tickets_univer',
 
-            connection.query('SELECT * FROM campanas',(err,rows)=>{
-                connection.release()//returns the connection pool
-
-                if(!err){
-                    res.send(rows)
-                }else{
-                    console.log(err)
-                }
-            })
-
-    })
-})
+// })
 
 
-app.listen(port,()=>console.log('Listen on port: ${port}'))
+//POST
+// app.post('/api/tickets',(req,res)=>{
+
+//     pool.getConnection((err,connection)=>{
+//         if(err) throw err
+//         console.log('connectec as id: ', connection.threadId)
+
+//             connection.query('INSERT INTO tickets SET ?',request.body, (error, result) => {
+//                 if (error) throw error;
+         
+//                 response.status(201).send(`User added with ID: ${result.insertId}`);
+//             });
+//     })
+// })
+//GET
+// app.get('/api/get/campanas',(req,res)=>{
+
+//     pool.getConnection((err,connection)=>{
+//         if(err) throw err
+//         console.log('connectec as id: ', connection.threadId)
+
+//             connection.query('SELECT * FROM campanas',(err,rows)=>{
+//                 connection.release()//returns the connection pool
+
+//                 if(!err){
+//                     res.send(rows)
+//                 }else{
+//                     console.log(err)
+//                 }
+//             })
+
+//     })
+// })
+// app.get('/api/get/tickets',(req,res)=>{
+
+//     pool.getConnection((err,connection)=>{
+//         if(err) throw err
+//         console.log('connectec as id: ', connection.threadId)
+
+//             connection.query('SELECT * FROM tickets',(err,rows)=>{
+//                 connection.release()//returns the connection pool
+
+//                 if(!err){
+//                     res.send(rows)
+//                 }else{
+//                     console.log(err)
+//                 }
+//             })
+
+//     })
+// })
+
+
+// app.listen(port,()=>console.log('Listen on port: ${port}'))

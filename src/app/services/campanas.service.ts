@@ -15,7 +15,7 @@ export class CampanasService  {
 
     getCampanas():Observable<Campanas[]>
     {
-        return this.http.get<Campanas[]>(environment.apiUrl+"/get/campanas")
+        return this.http.get<Campanas[]>(environment.apiUrl+"/campanas")
     }
   
 

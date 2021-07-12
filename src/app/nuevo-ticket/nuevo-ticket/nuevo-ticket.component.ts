@@ -37,6 +37,7 @@ export class NuevoTicketComponent implements OnInit {
 
   getCampanas()
   {
+
     this.campanaService.getCampanas()
     .subscribe((response)=>{
       this.listaCampanas=response
@@ -57,16 +58,17 @@ export class NuevoTicketComponent implements OnInit {
 
 
     let tickets: Tickets = {
-      id:1,
-      campana:campana,
-      responsable:responsable,
-      supervisor:'',
-      estatus:estatus,
-      fecha_inicio:fecha_inicio,
-      fecha_fin:fecha_fin,
-      fecha_seguimeinto:fecha_seguimeinto,
-      hora_abierto:hora_abierto,
+      ID:1,
+      Descripcion:campana,
+      Responsable:responsable,
+      Supervisado:'',
+      Creado_Por:'Arturo',
+      Estatus:estatus,
+      Fecha_Inicio:fecha_inicio,
+      Fecha_Fin:fecha_fin,
+      Fecha_Seguimeinto:fecha_seguimeinto,
+      Hora_Abierto:hora_abierto,
       };
-    this.http.post<Tickets>(environment.apiUrl+"/api/tickets",tickets)
+    this.http.post<Tickets>(environment.apiUrl+"/tickets",tickets,{observe:'response'}).subscribe();
   }
 }
