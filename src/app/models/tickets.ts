@@ -9,7 +9,8 @@ export interface Tickets
   Creado_Por:string;
   Estatus:number;
   Fecha_Inicio:Date;
-  Fecha_Fin:number;
-  Fecha_Seguimeinto:number;
-  Hora_Abierto:number;
+  Fecha_Fin:Date;
+  Fecha_Seguimeinto:Date;
+  Hora_Abierto:String;
+  Color:string;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewEncapsulation } from '@angular/core';
+import { Component, OnInit,ViewChild,ViewEncapsulation } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from "@angular/common/http";
 import {environment} from "../../../environments/environment"
@@ -8,6 +8,9 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { TicketService } from 'app/services/ticket.service';
 import { CampanasService } from 'app/services/campanas.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { DashboardComponent } from 'app/dashboard/dashboard.component';
 
 @Component({
   selector: 'app-nuevo-ticket',
@@ -15,14 +18,21 @@ import { CampanasService } from 'app/services/campanas.service';
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./nuevo-ticket.component.css']
 })
+
 export class NuevoTicketComponent implements OnInit {
   public listaTickets:Tickets[];
   public listaCampanas:Campanas[]=[];
+  closeResult: string;
+
+  @ViewChild('exito') exito=null;
 
   constructor(
+    private modalService: NgbModal,
     public modal: NgbActiveModal,
     private http: HttpClient,
-    public campanaService:CampanasService
+    public ticketService:TicketService,
+    public campanaService:CampanasService,
+    public dashboardService:DashboardComponent
   ) {
 
    }
@@ -49,12 +59,20 @@ export class NuevoTicketComponent implements OnInit {
   {
     var date = new Date();
 
+
     let estatus = 1 
-    let fecha_inicio= date;
+    let fecha_inicio = date;
     // add a day
-    let fecha_fin= date.setHours( date.getHours() + 24 );
-    let fecha_seguimeinto = date.setHours( date.getHours() + 48 );
-    let hora_abierto = date.setHours( date.getHours() + 1 );
+    var date4 =new Date();
+    let fecha_fin= new Date(date4.setHours( date4.getHours() + 24 ));
+
+    var date2=new Date();
+
+    let fecha_seguimeinto = new Date (date2.setHours( date2.getHours() + 48 ));
+
+    var date3= new Date();
+
+    let hora_abierto = date3.getHours()+":"+date3.getMinutes()+":"+date3.getSeconds();
 
 
     let tickets: Tickets = {
@@ -68,7 +86,44 @@ export class NuevoTicketComponent implements OnInit {
       Fecha_Fin:fecha_fin,
       Fecha_Seguimeinto:fecha_seguimeinto,
       Hora_Abierto:hora_abierto,
+      Color:"#21D864"
       };
-    this.http.post<Tickets>(environment.apiUrl+"/tickets",tickets,{observe:'response'}).subscribe();
+      
+      this.ticketService.postTickets(tickets)
+      .subscribe(
+      res => console.log('HTTP response', res),
+      err => console.log('HTTP Error', err),
+      () =>
+      {
+        console.log('HTTP request completed.')
+        this.ticketService.getTickets().subscribe((response)=>
+        {
+          console.log(response)
+        })
+        this.openMini(this.exito)
+        this.dashboardService.getTickets();
+      })
   }
+
+  openMini(exito) {
+
+    this.modalService.open(exito,{ size: 'sm' }).result.then((result) => {
+    this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+        return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+        return 'by clicking on a backdrop';
+    } else {
+        return  `with: ${reason}`;
+    }
+  }
+
+  
 }
